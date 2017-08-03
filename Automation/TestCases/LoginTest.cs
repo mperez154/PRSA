@@ -13,8 +13,8 @@ namespace Automation.TestCases
         {
             //Should pass
             HomePg.GetSite(driver);
-            Assert.AreEqual("https://www.google.com/?gws_rd=ssl", driver.Url);
-            Assert.AreEqual("Google", driver.Title);
+            Assert.AreEqual("http://node1-qa/smart.luis/Reservations/Reserve/?uniqueid=50027BC7-3591-4530-9284-224500614542", driver.Url);
+            Assert.AreEqual("WallyPark Reservations", driver.Title);
         }
 
         [Test, Property("Priority", 2)]
@@ -22,7 +22,7 @@ namespace Automation.TestCases
         {
             //Should Fail
             HomePg.GetSite(driver);
-            Assert.AreEqual("www.google.co", driver.Url);
+            Assert.AreEqual("www.google.com", driver.Url);
         }
     }
 }
