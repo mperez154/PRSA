@@ -6,15 +6,14 @@ namespace Automation.Interfaces
     {
         public static IWebElement element;
 
-        public static void GetReservationPage(IWebDriver driver)
+        public static void GetSite(IWebDriver driver, string url)
         {
-            driver.Url = "http://node1-qa/smart.luis/Reservations/Reserve/?uniqueid=50027BC7-3591-4530-9284-224500614542";
+            driver.Url = url;
         }
 
         public static string Title(IWebDriver driver)
         {
-            string title = driver.Title;
-            return title;
+            return driver.Title;
         }
     }
 }
