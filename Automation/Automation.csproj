@@ -55,8 +55,9 @@
   <ItemGroup>
     <Compile Include="Data\DBConnect.cs" />
     <Compile Include="Data\Strings.cs" />
-    <Compile Include="Interfaces\Base.cs" />
-    <Compile Include="Pages\HomePg.cs" />
+    <Compile Include="Interfaces\BasePage.cs" />
+    <Compile Include="Interfaces\BaseTest.cs" />
+    <Compile Include="Pages\FindAndReserve.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestCases\LoginTest.cs" />
   </ItemGroup>

@@ -7,7 +7,7 @@ using OpenQA.Selenium.Firefox;
 
 namespace Automation.Interfaces
 {
-    class Base
+    class BaseTest
     {
         public ExtentReports report;
         public ExtentTest test;

@@ -1,18 +1,10 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
+using Automation.Interfaces;
 
 namespace Automation.Pages
 {
-    class HomePg
+    class FindAndReserve: BasePage
     {
-        static private IWebElement element;
-
-        public static void GetSite(IWebDriver driver)
-        {
-            //driver.Url = "http://www.google.com";
-            driver.Url = "http://node1-qa/smart.luis/Reservations/Reserve/?uniqueid=50027BC7-3591-4530-9284-224500614542";
-        }
-
         public static IWebElement Location(IWebDriver driver)
         {
             element = driver.FindElement(By.Id("ShopRates"));
@@ -78,13 +70,5 @@ namespace Automation.Pages
             element = driver.FindElement(By.XPath(".//*[@id='form0']/div/h1"));
             return element;
         }
-
-        public static string Title(IWebDriver driver)
-        {
-            string title = driver.Title;
-            return title;
-        }
-
-
     }
 }
