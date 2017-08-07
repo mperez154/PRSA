@@ -1,29 +1,42 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Data;
 
 namespace Automation.Data
 {
     class DBConnect
     {
-        public static void myDbConnection()
+        public static void getUser()
         {
-            string connectionString = "Data Source=DatabaseServer; Initial Catalog=Luis_Parking; User ID=YourUserID; Password=YourPassword";
-
-            using (SqlConnection con = new SqlConnection(connectionString))
+            string connetionString = "Data Source=PRS-SQL-SERVER\\QASQLSERVER;Initial Catalog=LUIS_PARKING;User Id=luis_parking_user; Password=luispass!1";
+            SqlConnection connection;
+            SqlCommand command;
+            string sql = "Select top 10 consumer_ID from dbo.consumer";
+            SqlDataReader dataReader;
+            connection = new SqlConnection(connetionString);
+            List<string> userData = new List<string>();
+            try
             {
-                string queryStatement = "SELECT TOP 5 * FROM dbo.Customers ORDER BY CustomerID";
-                using (SqlCommand sqlCommand = new SqlCommand(queryStatement, con))
+                connection.Open();
+                command = new SqlCommand(sql, connection);
+                dataReader = command.ExecuteReader();              
+
+                while (dataReader.Read())
                 {
-                    DataTable reservationsTable = new DataTable("Top5Customers");
-
-                    SqlDataAdapter sqlAdapter = new SqlDataAdapter(sqlCommand);
-
-                    con.Open();
-                    sqlAdapter.Fill(reservationsTable);
-                    con.Close();
+                    Console.Write(dataReader.GetValue(0) + "\n");
+                    //userData.Add((string) dataReader.GetValue(0));
                 }
+ 
+                dataReader.Close();
+                command.Dispose();
+                connection.Close();
             }
+            catch (Exception ex)
+            {
+                Console.Write(ex.Message + "Can not open connection ! ");
+            }
+
+            
         }
     }
 }
