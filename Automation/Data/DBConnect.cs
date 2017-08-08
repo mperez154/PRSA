@@ -6,36 +6,41 @@ namespace Automation.Data
 {
     class DBConnect
     {
-        public static void getUser()
+        public static List<Object> GetUser()
         {
             string connetionString = "Data Source=PRS-SQL-SERVER\\QASQLSERVER;Initial Catalog=LUIS_PARKING;User Id=luis_parking_user; Password=luispass!1";
             SqlConnection connection;
             SqlCommand command;
-            string sql = "Select top 10 consumer_ID from dbo.consumer";
+            string selects = " top 10 consumer_id, firstname, lastname, username ";
+            string tables = " dbo.consumer ";
+            string wheres = " firstname IS NOT NULL AND lastname IS NOT NULL and username IS NOT NULL AND firstname != '' AND lastname != '' and username != '' ";
+            string query = "SELECT " + selects + " FROM " + tables + " WHERE " + wheres;
             SqlDataReader dataReader;
             connection = new SqlConnection(connetionString);
-            List<string> userData = new List<string>();
+            List<Object> userData = new List<Object>();
             try
             {
                 connection.Open();
-                command = new SqlCommand(sql, connection);
-                dataReader = command.ExecuteReader();              
-
+                command = new SqlCommand(query, connection);
+                dataReader = command.ExecuteReader();  
+                
                 while (dataReader.Read())
                 {
-                    Console.Write(dataReader.GetValue(0) + "\n");
-                    //userData.Add((string) dataReader.GetValue(0));
+                    for(int i = 0; i < 4; i++)
+                    {
+                        userData.Add(dataReader.GetValue(i));
+                    }
                 }
- 
+
                 dataReader.Close();
                 command.Dispose();
                 connection.Close();
             }
             catch (Exception ex)
             {
-                Console.Write(ex.Message + "Can not open connection ! ");
+                Console.Write(ex.Message + "Can not open connection!");
             }
-
+            return userData;
             
         }
     }

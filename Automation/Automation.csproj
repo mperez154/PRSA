@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Data\DBConnect.cs" />
     <Compile Include="Data\strngs.cs" />
+    <Compile Include="Data\User.cs" />
     <Compile Include="Interfaces\BasePage.cs" />
     <Compile Include="Interfaces\BaseTest.cs" />
     <Compile Include="Pages\FindAndReserve.cs" />
