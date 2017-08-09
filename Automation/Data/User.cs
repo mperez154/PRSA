@@ -16,12 +16,11 @@ namespace Automation.Data
             string connectionString = "Data Source=PRS-SQL-SERVER\\QASQLSERVER;Initial Catalog=LUIS_PARKING;User Id=luis_parking_user; Password=luispass!1";
             SqlConnection connection;
             SqlCommand command;
-            string selects = " top 1 consumer_id, firstname, lastname, username, password ";
+            string selects = " consumer_id, firstname, lastname, username, password ";
             string tables = " dbo.consumer ";
             string wheres = " firstname IS NOT NULL AND lastname IS NOT NULL and username IS NOT NULL AND firstname != '' AND lastname != '' and username != '' ";
-            string order = "";
-            string offset = "";
-            string query = "SELECT " + selects + " FROM " + tables + " WHERE " + wheres;
+            string orderBy = " 1, 2 ASC OFFSET " + GetRandomNumber() + " ROWS FETCH NEXT 1 ROWS ONLY; ";
+            string query = "SELECT " + selects + " FROM " + tables + " WHERE " + wheres + " ORDER BY " + orderBy;
             SqlDataReader dataReader;
             connection = new SqlConnection(connectionString);
 
@@ -50,7 +49,14 @@ namespace Automation.Data
             }
         }
 
-        public string getFirstname()
+        public string GetRandomNumber()
+        {
+            Random random = new Random();
+            string myNumber = random.Next(100, 500000).ToString();            
+            return myNumber;
+        }
+
+        public string GetFirstName()
         {
             return firstname;
         }

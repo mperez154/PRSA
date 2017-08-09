@@ -32,8 +32,11 @@ namespace Automation.TestCases
         [Test, Property("Priority", 2)]
         public void ValidateTitle()
         {
-            User user = new User();
-            Console.Write(user.getFirstname());
+            User user = new User(); 
+            Console.Write("Consumer ID: " + user.GetConsumerID() + "\n");
+            Console.Write("Name: " + user.GetFirstName() + " " + user.GetLastname() + "\n");
+            Console.Write("Username: " + user.GetUsername() + "\n");
+            Console.Write("Password: " + user.GetPassword() + "\n");
             //Should Fail
             //FindAndReserve.GetSite(driver, strngs.getReservationPage());
             //Assert.AreEqual("WallyPark Reservation Fail", driver.Title);
