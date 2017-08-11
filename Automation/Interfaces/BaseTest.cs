@@ -11,7 +11,7 @@ namespace Automation.Interfaces
 {
     class BaseTest
     {
-        public User user = new User();
+        
         public DateTime date = DateTime.Today.Add(TimeSpan.FromDays(GetRandomNumber(14, 28)));
         public ExtentReports report;
         public ExtentTest test;

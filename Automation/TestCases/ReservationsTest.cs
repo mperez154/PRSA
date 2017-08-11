@@ -37,6 +37,7 @@ namespace Automation.TestCases
         [Test, Property("Priority", 1), Repeat(1)]
         public void JoesCreateReservation()
         {
+            User user = new User();
             //Create Reservation URL
             FindAndReserve.GetSite(driver, strngs.GetJoesParking());
 
@@ -69,7 +70,7 @@ namespace Automation.TestCases
             ProvideInformation.FirstName(driver).SendKeys(user.GetFirstName());
             ProvideInformation.LastName(driver).SendKeys(user.GetLastname());
             ProvideInformation.Address(driver).SendKeys(user.GetAddress());
-            ProvideInformation.City(driver).SendKeys(user.GetCity());
+            ProvideInformation.City(driver).SendKeys(user.GetCity() + Keys.Tab);
             ProvideInformation.State(driver).SendKeys(user.GetState());
             ProvideInformation.Zip(driver).SendKeys(user.GetZip());
             ProvideInformation.Phone(driver).SendKeys(user.GetPhone());
