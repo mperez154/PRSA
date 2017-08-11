@@ -9,6 +9,12 @@
         private static string JoesCreateReservation = "http://smartluis-v2-staging.azurewebsites.net/Reservations/Reserve/?uniqueid=432D9FA1-60C8-44D6-B5F0-EC5A70F64CDB";
         private static string dateFormat = "g";
         private static string qaEmail = "ozerep154@gmail.com";
+        private static string attribute = "value";
+
+        public static string GetAttribute()
+        {
+            return attribute;
+        }
 
         public static string GetQAEmail()
         {

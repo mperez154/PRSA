@@ -65,7 +65,7 @@ namespace Automation.Interfaces
             report.Flush();
             report.Close();
         }
-        public int GetRandomNumber(int start, int end)
+        public static int GetRandomNumber(int start, int end)
         {
             Random random = new Random();
             int myNumber = random.Next(start, end);
