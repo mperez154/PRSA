@@ -11,14 +11,16 @@ namespace Automation.Interfaces
 {
     class BaseTest
     {
+        public User user = new User();
+        public DateTime date = DateTime.Today.Add(TimeSpan.FromDays(GetRandomNumber(14, 28)));
         public ExtentReports report;
         public ExtentTest test;
         public IWebDriver driver;
         public static string path = System.Reflection.Assembly.GetCallingAssembly().CodeBase;
         public static string actualPath = path.Substring(0, path.LastIndexOf("bin"));
         public static string projectPath = new Uri(actualPath).LocalPath;
-        public static DateTime date = DateTime.Now;
-        public string today = "" + date.Month + date.Day + date.Year + date.Hour + date.Minute;
+        public static DateTime testDate = DateTime.Now;
+        public string today = "" + testDate.Month + testDate.Day + testDate.Year + testDate.Hour + testDate.Minute;
         public Dictionary<string, string> validation = new Dictionary<string, string>();
 
         [SetUp]

@@ -37,9 +37,6 @@ namespace Automation.TestCases
         [Test, Property("Priority", 1), Repeat(1)]
         public void JoesCreateReservation()
         {
-            User user = new User();
-            DateTime date = DateTime.Today.Add(TimeSpan.FromDays(GetRandomNumber(14,28)));
-
             //Create Reservation URL
             FindAndReserve.GetSite(driver, strngs.GetJoesParking());
 
