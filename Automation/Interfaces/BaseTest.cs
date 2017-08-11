@@ -4,6 +4,8 @@ using System;
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
+using System.Collections.Generic;
+using Automation.Data;
 
 namespace Automation.Interfaces
 {
@@ -17,6 +19,7 @@ namespace Automation.Interfaces
         public static string projectPath = new Uri(actualPath).LocalPath;
         public static DateTime date = DateTime.Now;
         public string today = "" + date.Month + date.Day + date.Year + date.Hour + date.Minute;
+        public Dictionary<string, string> validation = new Dictionary<string, string>();
 
         [SetUp]
         public void Initialize()
@@ -25,6 +28,7 @@ namespace Automation.Interfaces
 
             //Report path setup
             string reportPath = projectPath + "Reports\\AutomationReport_" + today + ".html";
+            //string reportPath = projectPath + "Reports\\AutomationReport.html";
 
             //Report initialization
             report = new ExtentReports(reportPath, false);
@@ -51,11 +55,21 @@ namespace Automation.Interfaces
             else
             {
                 test.Log(LogStatus.Pass, "Passed");
+                foreach(KeyValuePair<string, string> pair in validation)
+                {
+                    test.Log(LogStatus.Info, pair.Key + ":  " + pair.Value);
+                }
             }
             driver.Quit();
             report.EndTest(test);
             report.Flush();
             report.Close();
+        }
+        public int GetRandomNumber(int start, int end)
+        {
+            Random random = new Random();
+            int myNumber = random.Next(start, end);
+            return myNumber;
         }
     }
 }

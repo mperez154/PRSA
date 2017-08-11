@@ -10,15 +10,20 @@ namespace Automation.Data
         private string username;
         private string password;
         private string consumer_Id;
-
+        private string address;
+        private string state;
+        private string zip;
+        private string phone;
+        private string city;
+        
         public User()
         {
             string connectionString = "Data Source=PRS-SQL-SERVER\\QASQLSERVER;Initial Catalog=LUIS_PARKING;User Id=luis_parking_user; Password=luispass!1";
             SqlConnection connection;
             SqlCommand command;
-            string selects = " consumer_id, firstname, lastname, username, password ";
+            string selects = " consumer_id, firstname, lastname, username, password, address_1, state_region, postal_code, home_phone, city ";
             string tables = " dbo.consumer ";
-            string wheres = " firstname IS NOT NULL AND lastname IS NOT NULL and username IS NOT NULL AND firstname != '' AND lastname != '' and username != '' ";
+            string wheres = " firstname IS NOT NULL AND firstname != '' AND lastname IS NOT NULL AND lastname != '' and username IS NOT NULL  and username != '' AND address_1 IS NOT NULL AND address_1 != '' AND state_region IS NOT NULL AND state_region != '' AND postal_code IS NOT NULL AND postal_code != '' and home_phone IS NOT NULL and home_phone != '' AND city IS NOT NULL AND city != '' ";
             string orderBy = " 1, 2 ASC OFFSET " + GetRandomNumber() + " ROWS FETCH NEXT 1 ROWS ONLY; ";
             string query = "SELECT " + selects + " FROM " + tables + " WHERE " + wheres + " ORDER BY " + orderBy;
             SqlDataReader dataReader;
@@ -37,6 +42,11 @@ namespace Automation.Data
                     SetLastname(dataReader.GetValue(2).ToString());
                     SetUsername(dataReader.GetValue(3).ToString());
                     SetPassword(dataReader.GetValue(4).ToString());
+                    SetAddress(dataReader.GetValue(5).ToString());
+                    SetState(dataReader.GetValue(6).ToString());
+                    SetZip(dataReader.GetValue(7).ToString());
+                    SetPhone(dataReader.GetValue(8).ToString());
+                    SetCity(dataReader.GetValue(9).ToString());
                 }
 
                 dataReader.Close();
@@ -52,7 +62,7 @@ namespace Automation.Data
         public string GetRandomNumber()
         {
             Random random = new Random();
-            string myNumber = random.Next(100, 500000).ToString();            
+            string myNumber = random.Next(100, 20000).ToString();            
             return myNumber;
         }
 
@@ -95,9 +105,52 @@ namespace Automation.Data
         {
             return password;
         }
+        public string GetAddress()
+        {
+            return address;
+        }
+        public string GetState()
+        {
+            return state;
+        }
+        public string GetZip()
+        {
+            return zip;
+        }
         public void SetPassword(string password)
         {
             this.password = password;
+        }
+
+        public void SetAddress(string address)
+        {
+            this.address = address;
+        }
+
+        public void SetState(string state)
+        {
+            this.state = state;
+        }
+
+        public void SetZip(string zip)
+        {
+            this.zip = zip;
+        }
+        public string GetPhone()
+        {
+            return phone;
+        }
+        public void SetPhone(string phone)
+        {
+            this.phone = phone;
+        }
+        public void SetCity(string city)
+        {
+            this.city = city;
+        }
+        public string GetCity()
+        {
+            return city;
         }
     }
 }

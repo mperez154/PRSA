@@ -11,6 +11,12 @@ namespace Automation.Pages
             return element;
         }
 
+        public static IWebElement LocationDropdown(IWebDriver driver)
+        {
+            element = driver.FindElement(By.XPath(".//*[@id='ShopRates']/div[1]/ul/li[3]"));
+            return element;
+        }
+
         public static IWebElement StartDate(IWebDriver driver)
         {
             element = driver.FindElement(By.Id("ShopRatesStartDate"));
