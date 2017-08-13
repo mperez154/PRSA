@@ -1,6 +1,6 @@
 ﻿namespace Automation.Data
 {
-    class strngs
+    class Strngs
     {
         private static string createReservationPage = "http://smartluis-v2-staging.azurewebsites.net/Reservations/Reserve/?uniqueid=50027BC7-3591-4530-9284-224500614542"; 
         private static string findReservationPage = "http://node1-qa/smart.luis/Reservations/Confirmation/?uniqueid=50027BC7-3591-4530-9284-224500614542";

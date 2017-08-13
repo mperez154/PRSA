@@ -23,11 +23,21 @@ namespace Automation.Interfaces
         public string today = "" + testDate.Month + testDate.Day + testDate.Year + testDate.Hour + testDate.Minute;
         public Dictionary<string, string> validation = new Dictionary<string, string>();
 
+        [OneTimeSetUp]
+        public void PreInitialize()
+        {
+            driver = new FirefoxDriver();
+        }
+
+        [OneTimeTearDown]
+        public void EndAll()
+        {
+            driver.Quit();
+        }
+       
         [SetUp]
         public void Initialize()
         {
-            driver = new FirefoxDriver();
-            
             //Report path setup
             string reportPath = projectPath + "Reports\\AutomationReport_" + today + ".html";
             //string reportPath = projectPath + "Reports\\AutomationReport.html";
@@ -62,12 +72,14 @@ namespace Automation.Interfaces
                     test.Log(LogStatus.Info, pair.Key + ":  " + pair.Value);
                 }
             }
-            driver.Quit();
+            
             report.EndTest(test);
             report.Flush();
             report.Close();
             validation.Clear();
         }
+
+       
         public static int GetRandomNumber(int start, int end)
         {
             Random random = new Random();

@@ -6,33 +6,33 @@ using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System.Drawing;
-using System.Windows;
 
 namespace Automation.TestCases
 {
+    [TestFixture]
     class ReservationsTest : BaseTest
     {
-        [Test, Property("Priority", 1), Ignore("Skipping for now")]
+        [Test, Property("Priority", 3)]
         public void JoesCancelReservation()
         {
-            User user = new User();
+            //User user = new User();
            
-            FindAndReserve.GetSite(driver, strngs.GetReservationPage());
-            Assert.AreEqual("http://node1-qa/smart.luis/Reservations/Reserve/?uniqueid=50027BC7-3591-4530-9284-224500614542", driver.Url);
+            FindAndReserve.GetSite(driver, "https://www.google.com");
+            Assert.AreEqual("https://www.google.com/", driver.Url);
         }
 
-        [Test, Property("Priority", 2), Ignore("Skipping for now")]
+        [Test, Property("Priority", 2)]
         public void JoesModifyReservation()
         {
-            User user = new User();
-            Console.Write("Consumer ID: " + user.GetConsumerID() + "\n");
-            Console.Write("Name: " + user.GetFirstName() + " " + user.GetLastname() + "\n");
-            Console.Write("Username: " + user.GetUsername() + "\n");
-            Console.Write("Password: " + user.GetPassword() + "\n");
+            //User user = new User();
+            //Console.Write("Consumer ID: " + user.GetConsumerID() + "\n");
+            //Console.Write("Name: " + user.GetFirstName() + " " + user.GetLastname() + "\n");
+            //Console.Write("Username: " + user.GetUsername() + "\n");
+            //Console.Write("Password: " + user.GetPassword() + "\n");
             //Should Fail
             //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-            //FindAndReserve.GetSite(driver, strngs.GetReservationPage());
-            //Assert.AreEqual("WallyPark Reservation Fail", driver.Title);
+            FindAndReserve.GetSite(driver, Strngs.GetReservationPage());
+            Assert.AreEqual("WallyPark Reservations", driver.Title);
         }
 
         [Test, Property("Priority", 1), Repeat(1)]
@@ -40,7 +40,7 @@ namespace Automation.TestCases
         {
             User user = new User();
             //Create Reservation URL
-            FindAndReserve.GetSite(driver, strngs.GetJoesParking());
+            FindAndReserve.GetSite(driver, Strngs.GetJoesParking());
             driver.Manage().Window.Size = new Size(1400, 900);
 
             //Location drop down arrow on Find & Reserve Page
@@ -51,11 +51,11 @@ namespace Automation.TestCases
 
             //Enter start date
             FindAndReserve.StartDate(driver).Clear();
-            FindAndReserve.StartDate(driver).SendKeys(date.ToString(strngs.GetDateFormat()) + Keys.Tab);
+            FindAndReserve.StartDate(driver).SendKeys(date.ToString(Strngs.GetDateFormat()) + Keys.Tab);
 
             //Enter end date
             FindAndReserve.EndDate(driver).Clear();
-            FindAndReserve.EndDate(driver).SendKeys(date.Add(TimeSpan.FromDays(GetRandomNumber(1,5))).ToString(strngs.GetDateFormat()));
+            FindAndReserve.EndDate(driver).SendKeys(date.Add(TimeSpan.FromDays(GetRandomNumber(1,5))).ToString(Strngs.GetDateFormat()));
             FindAndReserve.Discount(driver).Click();
             FindAndReserve.ContinueAsGuest(driver).Click(); //Click continue as guest
 
@@ -76,7 +76,7 @@ namespace Automation.TestCases
             ProvideInformation.State(driver).SendKeys(user.GetState());
             ProvideInformation.Zip(driver).SendKeys(user.GetZip());
             ProvideInformation.Phone(driver).SendKeys(user.GetPhone());
-            ProvideInformation.Email(driver).SendKeys(strngs.GetQAEmail());
+            ProvideInformation.Email(driver).SendKeys(Strngs.GetQAEmail());
             ProvideInformation.ReserveButton(driver).Click();   //Click 'Continue to Reservation' button
 
             // Confirmation Page
