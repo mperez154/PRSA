@@ -12,33 +12,66 @@ namespace Automation.TestCases
     [TestFixture]
     class ReservationsTest : BaseTest
     {
-        [Test, Property("Priority", 3)]
+        User user = new User();
+        [Test, Order(3)]
         public void JoesCancelReservation()
         {
             //User user = new User();
-           
-            FindAndReserve.GetSite(driver, "https://www.google.com");
-            Assert.AreEqual("https://www.google.com/", driver.Url);
+
+            Confirmation.Cancel(driver).Click();
+            Confirmation.CancelPopUp(driver).Click();
+
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
+            IWebElement element;
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            element = wait.Until(driver => Confirmation.ConfirmationNumber(driver));
+
+            Assert.AreEqual("Reservation Canceled", Confirmation.ConfirmedMessage(driver).Text);
+            validation.Add("Confirmation", Confirmation.ConfirmationNumber(driver).Text);
+            validation.Add("Name", Confirmation.Name(driver).Text);
+            validation.Add("Message", Confirmation.ConfirmedMessage(driver).Text);
+            validation.Add("Price", Confirmation.Price(driver).Text);
+
         }
 
-        [Test, Property("Priority", 2)]
+        [Test, Order(2)]
         public void JoesModifyReservation()
         {
             //User user = new User();
-            //Console.Write("Consumer ID: " + user.GetConsumerID() + "\n");
-            //Console.Write("Name: " + user.GetFirstName() + " " + user.GetLastname() + "\n");
-            //Console.Write("Username: " + user.GetUsername() + "\n");
-            //Console.Write("Password: " + user.GetPassword() + "\n");
-            //Should Fail
             //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-            FindAndReserve.GetSite(driver, Strngs.GetReservationPage());
-            Assert.AreEqual("WallyPark Reservations", driver.Title);
+            Confirmation.Modify(driver).Click();
+            Confirmation.ModifyPopUp(driver).Click();
+            ChooseRate.ReserveButton(driver).Click();
+
+            ProvideInformation.FirstName(driver).SendKeys("Modify " + user.GetFirstName());
+            ProvideInformation.LastName(driver).SendKeys(user.GetLastname());
+            ProvideInformation.Address(driver).SendKeys(user.GetAddress());
+            ProvideInformation.City(driver).SendKeys(user.GetCity() + Keys.Tab);
+            ProvideInformation.State(driver).SendKeys(user.GetState());
+            ProvideInformation.Zip(driver).SendKeys(user.GetZip());
+            ProvideInformation.Phone(driver).SendKeys(user.GetPhone());
+            ProvideInformation.Email(driver).SendKeys(Strngs.GetQAEmail());
+            ProvideInformation.ReserveButton(driver).Click();   //Click 'Continue to Reservation' button
+
+            // Confirmation Page
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
+            IWebElement element;
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            element = wait.Until(driver => Confirmation.ConfirmationNumber(driver));
+
+            Assert.AreEqual("Reservation Modified", Confirmation.ConfirmedMessage(driver).Text);
+
+            validation.Add("Confirmation", Confirmation.ConfirmationNumber(driver).Text);
+            validation.Add("Name", Confirmation.Name(driver).Text);
+            validation.Add("Message", Confirmation.ConfirmedMessage(driver).Text);
+            validation.Add("Price", Confirmation.Price(driver).Text);
+            
         }
 
-        [Test, Property("Priority", 1), Repeat(1)]
+        [Test, Order(1)]
         public void JoesCreateReservation()
         {
-            User user = new User();
+            //User user = new User();
             //Create Reservation URL
             FindAndReserve.GetSite(driver, Strngs.GetJoesParking());
             driver.Manage().Window.Size = new Size(1400, 900);
@@ -82,6 +115,8 @@ namespace Automation.TestCases
             // Confirmation Page
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             element = wait.Until(driver => Confirmation.ConfirmationNumber(driver));
+
+            Assert.AreEqual("Reservation Confirmed", Confirmation.ConfirmedMessage(driver).Text);
 
             validation.Add("Confirmation", Confirmation.ConfirmationNumber(driver).Text);
             validation.Add("Name", Confirmation.Name(driver).Text);

@@ -27,5 +27,25 @@ namespace Automation.Pages
             element = driver.FindElement(By.XPath(".//*[@id='itemizedChargesTableContainer']/table/tbody/tr[7]/td[2]"));
             return element;
         }
+        public static IWebElement Modify(IWebDriver driver)
+        {
+            element = driver.FindElement(By.XPath(".//*[@id='quickActionInner']/a[2]"));
+            return element;
+        }
+        public static IWebElement ModifyPopUp(IWebDriver driver)
+        {
+            element = driver.FindElement(By.XPath(".//*[@id='modifyReservationModal']/div/div[2]/div[2]/div/input"));
+            return element;
+        }
+        public static IWebElement Cancel(IWebDriver driver)
+        {
+            element = driver.FindElement(By.XPath(".//*[@id='quickActionInner']/a[3]"));
+            return element;
+        }
+        public static IWebElement CancelPopUp(IWebDriver driver)
+        {
+            element = driver.FindElement(By.XPath(".//*[@id='cancelReservationModal']/div/div[2]/div[2]/div/input"));
+            return element;
+        }
     }
 }
