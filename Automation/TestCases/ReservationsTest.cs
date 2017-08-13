@@ -5,14 +5,15 @@ using Automation.Data;
 using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using System.Threading;
+using System.Drawing;
+using System.Windows;
 
 namespace Automation.TestCases
 {
     class ReservationsTest : BaseTest
     {
         [Test, Property("Priority", 1), Ignore("Skipping for now")]
-        public void ValidateURL()
+        public void JoesCancelReservation()
         {
             User user = new User();
            
@@ -21,7 +22,7 @@ namespace Automation.TestCases
         }
 
         [Test, Property("Priority", 2), Ignore("Skipping for now")]
-        public void ValidateTitle()
+        public void JoesModifyReservation()
         {
             User user = new User();
             Console.Write("Consumer ID: " + user.GetConsumerID() + "\n");
@@ -40,6 +41,7 @@ namespace Automation.TestCases
             User user = new User();
             //Create Reservation URL
             FindAndReserve.GetSite(driver, strngs.GetJoesParking());
+            driver.Manage().Window.Size = new Size(1400, 900);
 
             //Location drop down arrow on Find & Reserve Page
             FindAndReserve.Location(driver).Click();

@@ -27,7 +27,7 @@ namespace Automation.Interfaces
         public void Initialize()
         {
             driver = new FirefoxDriver();
-
+            
             //Report path setup
             string reportPath = projectPath + "Reports\\AutomationReport_" + today + ".html";
             //string reportPath = projectPath + "Reports\\AutomationReport.html";
@@ -66,6 +66,7 @@ namespace Automation.Interfaces
             report.EndTest(test);
             report.Flush();
             report.Close();
+            validation.Clear();
         }
         public static int GetRandomNumber(int start, int end)
         {
