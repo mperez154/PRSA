@@ -50,5 +50,15 @@ namespace Automation.Pages
             element = driver.FindElement(By.XPath(".//*[@id='form0']/div/div[2]/div/div[3]/div[2]/input"));
             return element;
         }
+        public static IWebElement StartDate(IWebDriver driver)
+        {
+            element = driver.FindElement(By.XPath(".//*[@id='form0']/div/div[1]/div[2]/span[2]"));
+            return element;
+        }
+        public static IWebElement EndDate(IWebDriver driver)
+        {
+            element = driver.FindElement(By.XPath(".//*[@id='form0']/div/div[1]/div[2]/span[3]"));
+            return element;
+        }
     }
 }

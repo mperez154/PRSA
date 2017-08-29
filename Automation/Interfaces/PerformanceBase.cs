@@ -9,9 +9,9 @@ using Automation.Data;
 
 namespace Automation.Interfaces
 {
-    class BaseTest
+    class PerformanceBase
     {
-        
+
         public DateTime date = DateTime.Today.Add(TimeSpan.FromDays(GetRandomNumber(14, 28)));
         public ExtentReports report;
         public ExtentTest test;
@@ -22,32 +22,24 @@ namespace Automation.Interfaces
         public static DateTime testDate = DateTime.Now;
         public string today = "" + testDate.Month + testDate.Day + testDate.Year + testDate.Hour + testDate.Minute;
         public Dictionary<string, string> validation = new Dictionary<string, string>();
+        //Counter only need when doing "performance tests" using the repeat method
+        public int counter = 1;
 
-        [OneTimeSetUp]
-        public void PreInitialize()
-        {
-           driver = new FirefoxDriver();
-        }
-
-        [OneTimeTearDown]
-        public void EndAll()
-        {
-          driver.Quit();
-        }
-       
+      
         [SetUp]
         public void Initialize()
         {
+            driver = new FirefoxDriver();
             //Report path setup
             //string reportPath = projectPath + "Reports\\AutomationReport_" + today + ".html";
             string reportPath = projectPath + "Reports\\AutomationReport.html";
 
             //Report initialization
             report = new ExtentReports(reportPath, false);
-            
+
             //Report Configuration
             report.LoadConfig(projectPath + "extent-config.xml");
-            test = report.StartTest(TestContext.CurrentContext.Test.Name);
+            test = report.StartTest(TestContext.CurrentContext.Test.Name + " " + counter);
         }
 
         [TearDown]
@@ -61,26 +53,28 @@ namespace Automation.Interfaces
                 test.Log(LogStatus.Fail, "Failed");
                 test.Log(LogStatus.Info, errorMessage);
                 Screenshot image = ((ITakesScreenshot)driver).GetScreenshot();
-                image.SaveAsFile(projectPath + "Reports\\Failed_" + TestContext.CurrentContext.Test.Name + "_"  + today + ".png", ScreenshotImageFormat.Png);
+                image.SaveAsFile(projectPath + "Reports\\Failed_" + TestContext.CurrentContext.Test.Name + "_" + today + ".png", ScreenshotImageFormat.Png);
                 test.Log(LogStatus.Info, "See Screenshot" + test.AddScreenCapture(".\\Failed_" + TestContext.CurrentContext.Test.Name + "_" + today + ".png"));
             }
             else
             {
                 test.Log(LogStatus.Pass, "Passed");
-                foreach(KeyValuePair<string, string> pair in validation)
+                foreach (KeyValuePair<string, string> pair in validation)
                 {
                     test.Log(LogStatus.Info, pair.Key + ":  " + pair.Value);
                 }
             }
 
-            
+
             report.EndTest(test);
             report.Flush();
             report.Close();
             validation.Clear();
+            driver.Quit();
+            counter++;
         }
 
-       
+
         public static int GetRandomNumber(int start, int end)
         {
             Random random = new Random();

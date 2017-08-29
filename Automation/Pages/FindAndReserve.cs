@@ -13,7 +13,8 @@ namespace Automation.Pages
 
         public static IWebElement LocationDropdown(IWebDriver driver)
         {
-            element = driver.FindElement(By.XPath(".//*[@id='ShopRates']/div[1]/ul/li[3]"));
+            //element = driver.FindElement(By.XPath(".//*[@id='ShopRates']/div[1]/ul/li[3]"));
+            element = driver.FindElement(By.XPath(".//*[@id='ShopRates']/div/ul/li[2]"));
             return element;
         }
 

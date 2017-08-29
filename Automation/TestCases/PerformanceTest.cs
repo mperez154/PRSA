@@ -6,16 +6,23 @@ using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System.Drawing;
+using Automation.TestCases;
 
 namespace Automation.TestCases
 {
-    [TestFixture]
-    class ReservationsTest : BaseTest
+    class PerformanceTest: PerformanceBase
     {
         User user = new User();
-        
-        [Test, Order(3)]
-        public void JoesCancelReservations()
+
+        [Test, Order(5), Repeat(1)]
+        public void JoesPerformanceTest()
+        {
+            JoesPerformanceCreate();
+            JoesPerformanceModify();
+            JoesPerformanceCancel();
+        }
+
+        public void JoesPerformanceCancel()
         {
             //Confirmation Page
             Confirmation.Cancel(driver).Click();
@@ -32,8 +39,7 @@ namespace Automation.TestCases
             validation.Add("Cancelled Price", Confirmation.Price(driver).Text);
         }
 
-        [Test, Order(2)]
-        public void JoesModifyReservation()
+        public void JoesPerformanceModify()
         {
 
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
@@ -72,11 +78,10 @@ namespace Automation.TestCases
             validation.Add("Modify Price", Confirmation.Price(driver).Text);
         }
 
-        [Test, Order(1)]
-        public void JoesCreateReservation()
+        public void JoesPerformanceCreate()
         {
             //Create Reservation URL
-            FindAndReserve.GetSite(driver, Strngs.GetJoesParking());
+            FindAndReserve.GetSite(driver, Strngs.GetJoesQA());
             driver.Manage().Window.Size = new Size(1750, 1050);
 
             //Find & Reserve Page
@@ -85,12 +90,12 @@ namespace Automation.TestCases
             FindAndReserve.StartDate(driver).Clear();
             FindAndReserve.StartDate(driver).SendKeys(date.ToString(Strngs.GetDateFormat()) + Keys.Tab);
             FindAndReserve.EndDate(driver).Clear();
-            FindAndReserve.EndDate(driver).SendKeys(date.Add(TimeSpan.FromDays(GetRandomNumber(1,5))).ToString(Strngs.GetDateFormat()));
+            FindAndReserve.EndDate(driver).SendKeys(date.Add(TimeSpan.FromDays(GetRandomNumber(1, 5))).ToString(Strngs.GetDateFormat()));
             FindAndReserve.Discount(driver).Click();
             FindAndReserve.ContinueAsGuest(driver).Click(); //Click continue as guest
 
             //Choose Rate page
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             IWebElement element = wait.Until(driver => ChooseRate.ReserveButton(driver));
             ChooseRate.ReserveButton(driver).Click();
 
@@ -118,37 +123,6 @@ namespace Automation.TestCases
             validation.Add("Reservation Dates", Confirmation.DateField(driver).Text);
         }
 
-        public void PaymentInfo()
-        {
-            // Element from Provide Info page
-            driver.FindElement(By.Id("Reservation_CreditCardName")).Click();
-            //driver.FindElement(By.Id("Reservation_CreditCardName")).SendKeys(firstName + " " + lastname);
 
-            driver.FindElement(By.Id("Reservation_CreditCardNumber")).Click();
-            driver.FindElement(By.Id("Reservation_CreditCardNumber")).SendKeys("5454545454545454");
-
-            driver.FindElement(By.Id("Reservation_CreditCardCvv")).Click();
-            driver.FindElement(By.Id("Reservation_CreditCardCvv")).SendKeys("123");
-
-            driver.FindElement(By.Id("ReservationCreditCardExpirationMonth_hidden")).Click();
-            driver.FindElement(By.Id("ReservationCreditCardExpirationMonth_hidden")).SendKeys("5");
-
-            driver.FindElement(By.Id("ReservationCreditCardExpirationYear_hidden")).Click();
-            driver.FindElement(By.Id("ReservationCreditCardExpirationYear_hidden")).SendKeys("2018");
-
-            driver.FindElement(By.Id("Reservation_BillingAddress")).Click();
-            //driver.FindElement(By.Id("Reservation_BillingAddress")).SendKeys(address);
-
-            driver.FindElement(By.Id("Reservation_BillingCity")).Click();
-            //driver.FindElement(By.Id("Reservation_BillingCity")).SendKeys(city);
-
-            driver.FindElement(By.Id("ReservationBillingState_hidden")).Click();
-            driver.FindElement(By.Id("ReservationBillingState_hidden")).SendKeys("F");
-
-            driver.FindElement(By.Id("Reservation_BillingPostalCode")).Click();
-            //driver.FindElement(By.Id("Reservation_BillingPostalCode")).SendKeys(zip);
-
-            //driver.FindElement(By.Id("Reservation_OptCancelPolicy")).Click();
-        }
     }
 }

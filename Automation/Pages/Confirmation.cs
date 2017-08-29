@@ -25,6 +25,7 @@ namespace Automation.Pages
         public static IWebElement Price(IWebDriver driver)
         {
             element = driver.FindElement(By.XPath(".//*[@id='itemizedChargesTableContainer']/table/tbody/tr[7]/td[2]"));
+            element = driver.FindElement(By.XPath(".//*[@id='form0']/div[1]/div[2]/div[2]/div[2]/div[1]"));
             return element;
         }
         public static IWebElement Modify(IWebDriver driver)
@@ -45,6 +46,11 @@ namespace Automation.Pages
         public static IWebElement CancelPopUp(IWebDriver driver)
         {
             element = driver.FindElement(By.XPath(".//*[@id='cancelReservationModal']/div/div[2]/div[2]/div/input"));
+            return element;
+        }
+        public static IWebElement DateField(IWebDriver driver)
+        {
+            element = driver.FindElement(By.XPath(".//*[@id='form0']/div[1]/div[2]/div[2]/div[1]/div[8]/div[2]"));
             return element;
         }
     }

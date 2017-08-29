@@ -64,11 +64,13 @@
     <Compile Include="Data\User.cs" />
     <Compile Include="Interfaces\BasePage.cs" />
     <Compile Include="Interfaces\BaseTest.cs" />
+    <Compile Include="Interfaces\PerformanceBase.cs" />
     <Compile Include="Pages\ChooseRate.cs" />
     <Compile Include="Pages\Confirmation.cs" />
     <Compile Include="Pages\FindAndReserve.cs" />
     <Compile Include="Pages\ProvideInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestCases\PerformanceTest.cs" />
     <Compile Include="TestCases\ReservationsTest.cs" />
     <Compile Include="TestCases\TimeDateTests.cs" />
   </ItemGroup>
