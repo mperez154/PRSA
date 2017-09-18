@@ -82,6 +82,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Reports\" />
+    <Folder Include="TestCases\Joes\" />
+    <Folder Include="TestCases\WallyPark\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="extent-config.xml" />

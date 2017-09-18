@@ -17,7 +17,7 @@
     <reportName>Automation Status Report</reportName>
 
     <!-- report headline - displayed at top-nav, after reportHeadline -->
-    <reportHeadline> - Staging Environment</reportHeadline>
+    <reportHeadline> - QA Environment</reportHeadline>
 
     <!-- global date format override --><!-- defaults to yyyy-MM-dd -->
     <dateFormat>MM-dd-yyyy</dateFormat>

@@ -47,7 +47,8 @@ namespace Automation.Pages
         }
         public static IWebElement ReserveButton(IWebDriver driver)
         {
-            element = driver.FindElement(By.XPath(".//*[@id='form0']/div/div[2]/div/div[3]/div[2]/input"));
+            //element = driver.FindElement(By.XPath(".//*[@id='form0']/div/div[2]/div/div[3]/div[2]/input")); //When payments don't exist
+            element = driver.FindElement(By.XPath(".//*[@id='form0']/div/div[2]/div/div[5]/div[2]/input")); // When payments do exist
             return element;
         }
         public static IWebElement StartDate(IWebDriver driver)

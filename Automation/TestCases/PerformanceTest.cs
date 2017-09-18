@@ -81,7 +81,7 @@ namespace Automation.TestCases
         public void JoesPerformanceCreate()
         {
             //Create Reservation URL
-            FindAndReserve.GetSite(driver, Strngs.GetJoesQA());
+            FindAndReserve.GetSite(driver, Strngs.GetReservationURL("QA", "Joes"));
             driver.Manage().Window.Size = new Size(1750, 1050);
 
             //Find & Reserve Page

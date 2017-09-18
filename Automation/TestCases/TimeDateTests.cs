@@ -19,7 +19,7 @@ namespace Automation.TestCases
         public void TimeDate_FindAndReservePage()
         {
             // Open Site
-            FindAndReserve.GetSite(driver, Strngs.GetJoesParking());
+            FindAndReserve.GetSite(driver, Strngs.GetReservationURL("Staging", "Joes"));
             driver.Manage().Window.Size = new Size(1750, 1050);
 
             // Select location

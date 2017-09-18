@@ -15,7 +15,7 @@ namespace Automation.TestCases
         User user = new User();
         
         [Test, Order(3)]
-        public void JoesCancelReservations()
+        public void CancelReservations()
         {
             //Confirmation Page
             Confirmation.Cancel(driver).Click();
@@ -33,7 +33,7 @@ namespace Automation.TestCases
         }
 
         [Test, Order(2)]
-        public void JoesModifyReservation()
+        public void ModifyReservation()
         {
 
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
@@ -49,7 +49,7 @@ namespace Automation.TestCases
             ChooseRate.ReserveButton(driver).Click();
 
             //Provide Information Page
-            element = wait.Until(driver => ProvideInformation.FirstName(driver));
+            element = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("Reservation_FirstName")));
             ProvideInformation.FirstName(driver).SendKeys("Modify " + user.GetFirstName());
             ProvideInformation.LastName(driver).SendKeys(user.GetLastname());
             ProvideInformation.Address(driver).SendKeys(user.GetAddress());
@@ -58,6 +58,10 @@ namespace Automation.TestCases
             ProvideInformation.Zip(driver).SendKeys(user.GetZip());
             ProvideInformation.Phone(driver).SendKeys(user.GetPhone());
             ProvideInformation.Email(driver).SendKeys(Strngs.GetQAEmail());
+
+            //Payment Info
+            PaymentInfo();
+
             ProvideInformation.ReserveButton(driver).Click();   //Click 'Continue to Reservation' button
 
             // Confirmation Page
@@ -73,11 +77,11 @@ namespace Automation.TestCases
         }
 
         [Test, Order(1)]
-        public void JoesCreateReservation()
+        public void CreateReservation()
         {
             //Create Reservation URL
-            FindAndReserve.GetSite(driver, Strngs.GetJoesParking());
-            driver.Manage().Window.Size = new Size(1750, 1050);
+            FindAndReserve.GetSite(driver, Strngs.GetReservationURL("QA", "WallyPark"));
+            driver.Manage().Window.Size = new Size(1200, 1050);
 
             //Find & Reserve Page
             FindAndReserve.Location(driver).Click();
@@ -90,12 +94,12 @@ namespace Automation.TestCases
             FindAndReserve.ContinueAsGuest(driver).Click(); //Click continue as guest
 
             //Choose Rate page
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             IWebElement element = wait.Until(driver => ChooseRate.ReserveButton(driver));
             ChooseRate.ReserveButton(driver).Click();
 
             //Provide Information Page
-            element = wait.Until(driver => ProvideInformation.FirstName(driver));
+            element = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("Reservation_FirstName")));
             ProvideInformation.FirstName(driver).SendKeys(user.GetFirstName());
             ProvideInformation.LastName(driver).SendKeys(user.GetLastname());
             ProvideInformation.Address(driver).SendKeys(user.GetAddress());
@@ -104,6 +108,10 @@ namespace Automation.TestCases
             ProvideInformation.Zip(driver).SendKeys(user.GetZip());
             ProvideInformation.Phone(driver).SendKeys(user.GetPhone());
             ProvideInformation.Email(driver).SendKeys(Strngs.GetQAEmail());
+            
+            //Payment Info
+            PaymentInfo();
+
             ProvideInformation.ReserveButton(driver).Click();   //Click 'Continue to Reservation' button
 
             // Confirmation Page
@@ -122,7 +130,7 @@ namespace Automation.TestCases
         {
             // Element from Provide Info page
             driver.FindElement(By.Id("Reservation_CreditCardName")).Click();
-            //driver.FindElement(By.Id("Reservation_CreditCardName")).SendKeys(firstName + " " + lastname);
+            driver.FindElement(By.Id("Reservation_CreditCardName")).SendKeys(user.GetFirstName() + " " + user.GetLastname());
 
             driver.FindElement(By.Id("Reservation_CreditCardNumber")).Click();
             driver.FindElement(By.Id("Reservation_CreditCardNumber")).SendKeys("5454545454545454");
@@ -137,18 +145,18 @@ namespace Automation.TestCases
             driver.FindElement(By.Id("ReservationCreditCardExpirationYear_hidden")).SendKeys("2018");
 
             driver.FindElement(By.Id("Reservation_BillingAddress")).Click();
-            //driver.FindElement(By.Id("Reservation_BillingAddress")).SendKeys(address);
+            driver.FindElement(By.Id("Reservation_BillingAddress")).SendKeys(user.GetAddress());
 
             driver.FindElement(By.Id("Reservation_BillingCity")).Click();
-            //driver.FindElement(By.Id("Reservation_BillingCity")).SendKeys(city);
+            driver.FindElement(By.Id("Reservation_BillingCity")).SendKeys(user.GetCity());
 
             driver.FindElement(By.Id("ReservationBillingState_hidden")).Click();
             driver.FindElement(By.Id("ReservationBillingState_hidden")).SendKeys("F");
 
             driver.FindElement(By.Id("Reservation_BillingPostalCode")).Click();
-            //driver.FindElement(By.Id("Reservation_BillingPostalCode")).SendKeys(zip);
+            driver.FindElement(By.Id("Reservation_BillingPostalCode")).SendKeys(user.GetZip());
 
-            //driver.FindElement(By.Id("Reservation_OptCancelPolicy")).Click();
+            driver.FindElement(By.Id("Reservation_OptCancelPolicy")).Click();
         }
     }
 }
