@@ -6,6 +6,7 @@ namespace Automation.Data
 {
     class DBConnect
     {
+        
         public static List<Object> GetUser()
         {
             string connetionString = "Data Source=PRS-SQL-SERVER\\QASQLSERVER;Initial Catalog=LUIS_PARKING;User Id=luis_parking_user; Password=luispass!1";

@@ -53,5 +53,17 @@ namespace Automation.Pages
             element = driver.FindElement(By.XPath(".//*[@id='form0']/div[1]/div[2]/div[2]/div[1]/div[8]/div[2]"));
             return element;
         }
+
+        public static void ClickModify(IWebDriver driver)
+        {
+            Modify(driver).Click();
+            ModifyPopUp(driver).Click();
+        }
+
+        public static void ClickCancel(IWebDriver driver)
+        {
+            Cancel(driver).Click();
+            CancelPopUp(driver).Click();
+        }
     }
 }

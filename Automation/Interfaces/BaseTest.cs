@@ -6,6 +6,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using System.Collections.Generic;
 using Automation.Data;
+using OpenQA.Selenium.Support.UI;
 
 namespace Automation.Interfaces
 {
@@ -20,8 +21,10 @@ namespace Automation.Interfaces
         public static string actualPath = path.Substring(0, path.LastIndexOf("bin"));
         public static string projectPath = new Uri(actualPath).LocalPath;
         public static DateTime testDate = DateTime.Now;
-        public string today = "" + testDate.Month + testDate.Day + testDate.Year + testDate.Hour + testDate.Minute;
+        public string today = "" + testDate.Month + testDate.Day + testDate.Year + testDate.Hour;
         public Dictionary<string, string> validation = new Dictionary<string, string>();
+        public User user = new User();
+        
 
         [OneTimeSetUp]
         public void PreInitialize()
@@ -39,8 +42,8 @@ namespace Automation.Interfaces
         public void Initialize()
         {
             //Report path setup
-            //string reportPath = projectPath + "Reports\\AutomationReport_" + today + ".html";
-            string reportPath = projectPath + "Reports\\AutomationReport.html";
+            string reportPath = projectPath + "Reports\\AutomationReport_" + today + ".html";
+            //string reportPath = projectPath + "Reports\\AutomationReport.html";
 
             //Report initialization
             report = new ExtentReports(reportPath, false);
@@ -72,15 +75,11 @@ namespace Automation.Interfaces
                     test.Log(LogStatus.Info, pair.Key + ":  " + pair.Value);
                 }
             }
-
-            
             report.EndTest(test);
             report.Flush();
             report.Close();
             validation.Clear();
         }
-
-       
         public static int GetRandomNumber(int start, int end)
         {
             Random random = new Random();

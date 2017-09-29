@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using Automation.Data;
+using OpenQA.Selenium;
 
 namespace Automation.Interfaces
 {
@@ -10,7 +11,6 @@ namespace Automation.Interfaces
         {
             driver.Url = url;
         }
-
         public static string Title(IWebDriver driver)
         {
             return driver.Title;

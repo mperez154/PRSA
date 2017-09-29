@@ -1,5 +1,8 @@
 ﻿using OpenQA.Selenium;
 using Automation.Interfaces;
+using System;
+using Automation.Data;
+using System.Drawing;
 
 namespace Automation.Pages
 {
@@ -9,6 +12,10 @@ namespace Automation.Pages
         {
             element = driver.FindElement(By.Id("ShopRates"));
             return element;
+        }
+        public static void ClickLocation(IWebDriver driver)
+        {
+            Location(driver).Click();
         }
 
         public static IWebElement LocationDropdown(IWebDriver driver)
@@ -77,5 +84,31 @@ namespace Automation.Pages
             element = driver.FindElement(By.XPath(".//*[@id='form0']/div/h1"));
             return element;
         }
+
+        public static void StartReservation(IWebDriver driver, DateTime date)
+        {
+            ClickLocation(driver);   //Test to see if line above can be replaced
+            LocationDropdown(driver).SendKeys(Keys.Down + Keys.Down);
+            StartDate(driver).Clear();
+            StartDate(driver).SendKeys(date.ToString(Strngs.GetDateFormat()) + Keys.Tab);
+            EndDate(driver).Clear();
+            EndDate(driver).SendKeys(date.Add(TimeSpan.FromDays(GetRandomNumber(1, 5))).ToString(Strngs.GetDateFormat()));
+            Discount(driver).Click();
+            ContinueAsGuest(driver).Click(); //Click continue as guest
+        }
+
+        public static void OpenSite(IWebDriver driver)
+        {
+            GetSite(driver, Strngs.GetReservationURL("QA", "WallyPark"));
+            driver.Manage().Window.Size = new Size(1600, 1050);
+        }
+
+        public static int GetRandomNumber(int start, int end)
+        {
+            Random random = new Random();
+            int myNumber = random.Next(start, end);
+            return myNumber;
+        }
+
     }
 }

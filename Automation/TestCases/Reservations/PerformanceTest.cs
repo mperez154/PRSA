@@ -41,7 +41,6 @@ namespace Automation.TestCases
 
         public void JoesPerformanceModify()
         {
-
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             IWebElement element;
 
