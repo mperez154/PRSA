@@ -59,6 +59,11 @@ namespace Automation.Data
             }
         }
 
+        public User(string myString)
+        {
+            DBConnect.GetUser();
+        }
+
         public string GetRandomNumber()
         {
             Random random = new Random();

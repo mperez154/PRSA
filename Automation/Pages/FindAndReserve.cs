@@ -3,10 +3,14 @@ using Automation.Interfaces;
 using System;
 using Automation.Data;
 using System.Drawing;
+using System.Collections.Generic;
+using OpenQA.Selenium.Support.UI;
+using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace Automation.Pages
 {
-    class FindAndReserve: BasePage
+    class FindAndReserve : BasePage
     {
         public static IWebElement Location(IWebDriver driver)
         {
@@ -23,6 +27,24 @@ namespace Automation.Pages
             //element = driver.FindElement(By.XPath(".//*[@id='ShopRates']/div[1]/ul/li[3]"));
             element = driver.FindElement(By.XPath(".//*[@id='ShopRates']/div/ul/li[2]"));
             return element;
+        }
+
+        public static string CompanyID(IWebDriver driver)
+        {
+            //Company ID (used to determine site (wally park, joes, etc)
+            return driver.FindElement(By.XPath("//*[@id='UniqueId']")).GetAttribute("value").ToString();
+        }
+
+        public static List<string> AllChannels(IWebDriver driver)
+        {
+            List<IWebElement> elements = new List<IWebElement>();
+            List<string> channels = new List<string>();
+            elements = driver.FindElements(By.ClassName("e-ddltxt")).ToList();
+            foreach (IWebElement option in elements)
+            {
+                channels.Add(option.GetAttribute("innerHTML"));
+            }
+            return channels;
         }
 
         public static IWebElement StartDate(IWebDriver driver)
@@ -81,7 +103,8 @@ namespace Automation.Pages
 
         public static IWebElement Header(IWebDriver driver)
         {
-            element = driver.FindElement(By.XPath(".//*[@id='form0']/div/h1"));
+            element = driver.FindElement(By.TagName("h1"));
+
             return element;
         }
 
@@ -97,9 +120,9 @@ namespace Automation.Pages
             ContinueAsGuest(driver).Click(); //Click continue as guest
         }
 
-        public static void OpenSite(IWebDriver driver)
+        public static void OpenSite(IWebDriver driver, string environment, string site)
         {
-            GetSite(driver, Strngs.GetReservationURL("QA", "WallyPark"));
+            GetSite(driver, GetReservationURL(environment, site));
             driver.Manage().Window.Size = new Size(1600, 1050);
         }
 

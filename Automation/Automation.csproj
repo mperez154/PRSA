@@ -59,6 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Channels.cs" />
     <Compile Include="Data\DBConnect.cs" />
     <Compile Include="Data\Strngs.cs" />
     <Compile Include="Data\User.cs" />
@@ -70,9 +71,10 @@
     <Compile Include="Pages\FindAndReserve.cs" />
     <Compile Include="Pages\ProvideInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestCases\Reservations\PerformanceTest.cs" />
+    <Compile Include="TestCases\Pages\FindAndReserveTest.cs" />
+    <Compile Include="TestCases\Other\PerformanceTest.cs" />
     <Compile Include="TestCases\Reservations\ReservationsTest.cs" />
-    <Compile Include="TestCases\Reservations\TimeDateTests.cs" />
+    <Compile Include="TestCases\Other\TimeDateTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
