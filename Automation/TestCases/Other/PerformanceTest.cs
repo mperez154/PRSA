@@ -14,8 +14,8 @@ namespace Automation.TestCases
     {
         User user = new User();
 
-        [Test, Order(5), Repeat(1)]
-        public void JoesPerformanceTest()
+        [Test, Repeat(1)]
+        public void WPPerformanceTest()
         {
             JoesPerformanceCreate();
             JoesPerformanceModify();
@@ -45,25 +45,18 @@ namespace Automation.TestCases
             IWebElement element;
 
             //Confirmation Page
-            //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-            Confirmation.Modify(driver).Click();
-            Confirmation.ModifyPopUp(driver).Click();
+            Confirmation.ClickModify(driver);
 
             //Choose Rate page
             element = wait.Until(driver => ChooseRate.ReserveButton(driver));
-            ChooseRate.ReserveButton(driver).Click();
+            ChooseRate.ClickReserve(driver);
 
             //Provide Information Page
-            element = wait.Until(driver => ProvideInformation.FirstName(driver));
-            ProvideInformation.FirstName(driver).SendKeys("Modify " + user.GetFirstName());
-            ProvideInformation.LastName(driver).SendKeys(user.GetLastname());
-            ProvideInformation.Address(driver).SendKeys(user.GetAddress());
-            ProvideInformation.City(driver).SendKeys(user.GetCity() + Keys.Tab);
-            ProvideInformation.State(driver).SendKeys(user.GetState());
-            ProvideInformation.Zip(driver).SendKeys(user.GetZip());
-            ProvideInformation.Phone(driver).SendKeys(user.GetPhone());
-            ProvideInformation.Email(driver).SendKeys(Strngs.GetQAEmail());
-            ProvideInformation.ReserveButton(driver).Click();   //Click 'Continue to Reservation' button
+            element = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("Reservation_FirstName")));
+
+            //Payment Info
+            ProvideInformation.PaymentInfo(driver, user);
+            ProvideInformation.ClickReserve(driver);   //Click 'Continue to Reservation' button
 
             // Confirmation Page
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
@@ -79,36 +72,22 @@ namespace Automation.TestCases
 
         public void JoesPerformanceCreate()
         {
-            //Create Reservation URL
-            FindAndReserve.GetSite(driver, FindAndReserve.GetReservationURL("QA", "Joes"));
-            driver.Manage().Window.Size = new Size(1750, 1050);
-
             //Find & Reserve Page
-            FindAndReserve.Location(driver).Click();
-            FindAndReserve.LocationDropdown(driver).SendKeys(Keys.Down + Keys.Down);
-            FindAndReserve.StartDate(driver).Clear();
-            FindAndReserve.StartDate(driver).SendKeys(date.ToString(Strngs.GetDateFormat()) + Keys.Tab);
-            FindAndReserve.EndDate(driver).Clear();
-            FindAndReserve.EndDate(driver).SendKeys(date.Add(TimeSpan.FromDays(GetRandomNumber(1, 5))).ToString(Strngs.GetDateFormat()));
-            FindAndReserve.Discount(driver).Click();
-            FindAndReserve.ContinueAsGuest(driver).Click(); //Click continue as guest
+            FindAndReserve.OpenSite(driver, "QA", "WallyPark");
+            FindAndReserve.StartReservation(driver, date);
 
             //Choose Rate page
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             IWebElement element = wait.Until(driver => ChooseRate.ReserveButton(driver));
-            ChooseRate.ReserveButton(driver).Click();
+            ChooseRate.ClickReserve(driver);
 
             //Provide Information Page
-            element = wait.Until(driver => ProvideInformation.FirstName(driver));
-            ProvideInformation.FirstName(driver).SendKeys(user.GetFirstName());
-            ProvideInformation.LastName(driver).SendKeys(user.GetLastname());
-            ProvideInformation.Address(driver).SendKeys(user.GetAddress());
-            ProvideInformation.City(driver).SendKeys(user.GetCity() + Keys.Tab);
-            ProvideInformation.State(driver).SendKeys(user.GetState());
-            ProvideInformation.Zip(driver).SendKeys(user.GetZip());
-            ProvideInformation.Phone(driver).SendKeys(user.GetPhone());
-            ProvideInformation.Email(driver).SendKeys(Strngs.GetQAEmail());
-            ProvideInformation.ReserveButton(driver).Click();   //Click 'Continue to Reservation' button
+            element = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("Reservation_FirstName")));
+            ProvideInformation.UserInfo(driver, user);
+
+            //Payment Info
+            ProvideInformation.PaymentInfo(driver, user);
+            ProvideInformation.ClickReserve(driver);   //Click 'Continue to Reservation' button
 
             // Confirmation Page
             element = wait.Until(driver => Confirmation.ConfirmationNumber(driver));
