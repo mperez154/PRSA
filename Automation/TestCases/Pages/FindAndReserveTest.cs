@@ -34,5 +34,29 @@ namespace Automation.TestCases.Reservations
             Assert.AreEqual("Find & Reserve", FindAndReserve.Header(driver).Text);
             validation.Add("Header Text", FindAndReserve.Header(driver).Text);
         }
+
+        [Test, Order(3)]
+        public void LabelsOnFindAndReservePage()
+        {
+            Assert.AreEqual("Location", FindAndReserve.LocationLabel(driver).Text);
+            Assert.AreEqual("Drop-off", FindAndReserve.StartDateLabel(driver).Text);
+            Assert.AreEqual("Pick-up", FindAndReserve.EndDateLabel(driver).Text);
+            Assert.AreEqual("Promo Code", FindAndReserve.DiscountLabel(driver).Text);
+
+            validation.Add("Location Label", FindAndReserve.LocationLabel(driver).Text);
+            validation.Add("Start Label", FindAndReserve.StartDateLabel(driver).Text);
+            validation.Add("End Label", FindAndReserve.EndDateLabel(driver).Text);
+            validation.Add("Discount Label", FindAndReserve.DiscountLabel(driver).Text);
+        }
+
+        [Test, Order(4)]
+        public void ButtonsOnFindAndReservePage()
+        {
+            Assert.AreEqual("Continue As Member", FindAndReserve.ContinueAsMember(driver).GetAttribute("value").ToString());
+            Assert.AreEqual("Continue As Guest", FindAndReserve.ContinueAsGuest(driver).GetAttribute("value").ToString());
+
+            validation.Add("Member Button", FindAndReserve.ContinueAsMember(driver).GetAttribute("value").ToString());
+            validation.Add("Guest Button", FindAndReserve.ContinueAsGuest(driver).GetAttribute("value").ToString());
+        }
     }
 }

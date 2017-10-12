@@ -1,5 +1,6 @@
 ﻿using Automation.Data;
 using OpenQA.Selenium;
+using System.Drawing;
 
 namespace Automation.Interfaces
 {
@@ -10,13 +11,13 @@ namespace Automation.Interfaces
         private static string dateFormat = "g";
         private static string qaEmail = "ozerep154+automated@gmail.com";
         private static string attribute = "value";
-        private static string QA = "http://node1-qa/smart.luis/";
+        public static string QA = "http://node1-qa/smart.luis/";
         private static string Staging = "http://smartluis-v2-staging.azurewebsites.net/";
         private static string Create = "Reservations/Reserve/?uniqueid=";
         private static string Find = "Reservations/Confirmation/?uniqueid=";
         private static string Joes = "432D9FA1-60C8-44D6-B5F0-EC5A70F64CDB";
         private static string WallyPark = "50027BC7-3591-4530-9284-224500614542";
-        private static string AdminPage = "Admin/Account/Login?returnUrl=/smart.luis/admin/home";
+        public static string AdminPage = "Admin";
         private static string LoyaltyPage = "Loyalty/Login?uniqueid=";
 
         public static string GetReservationURL(string enviroment, string company)
@@ -56,6 +57,12 @@ namespace Automation.Interfaces
         public static void GetSite(IWebDriver driver, string url)
         {
             driver.Url = url;
+        }
+
+        public static void OpenAdminSite(IWebDriver driver)
+        {
+            driver.Url = QA + AdminPage; 
+            driver.Manage().Window.Size = new Size(1600, 1050);
         }
 
         public static string Title(IWebDriver driver)

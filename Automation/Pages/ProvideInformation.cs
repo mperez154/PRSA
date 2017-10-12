@@ -5,6 +5,8 @@ namespace Automation.Pages
 {
     class ProvideInformation : BasePage
     {
+        private static string qaEmail = "ozerep154+automated@gmail.com";
+
         public static IWebElement FirstName(IWebDriver driver)
         {
             element = driver.FindElement(By.Id("Reservation_FirstName"));
@@ -132,7 +134,7 @@ namespace Automation.Pages
             State(driver).SendKeys(user.GetState());
             Zip(driver).SendKeys(user.GetZip());
             Phone(driver).SendKeys(user.GetPhone());
-            Email(driver).SendKeys(Data.Strngs.GetQAEmail());
+            Email(driver).SendKeys(qaEmail);
         }
 
         public static void PaymentInfo(IWebDriver driver, Data.User user)

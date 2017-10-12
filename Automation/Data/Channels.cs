@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.SqlClient;
 
 namespace Automation.Data
 {
-    class Channels
+    class Channels : DBConnect
     {
         public Channels()
         {
@@ -12,17 +11,15 @@ namespace Automation.Data
 
         public IEnumerable<string> GetAllChannels()
         {
-            string connectionString = "Data Source=PRS-SQL-SERVER\\QASQLSERVER;Initial Catalog=LUIS_PARKING;User Id=luis_parking_user; Password=luispass!1";
-            SqlConnection connection;
-            SqlCommand command;
+            //building query 
             string selects = " channel_name ";
             string tables = " channel ";
             string wheres = " company_id = 68 and is_active = 1 and end_date > getDate() and channel_type_id = 6 ";
             string orderBy = " 1 ASC ";
             string query = "SELECT " + selects + " FROM " + tables + " WHERE " + wheres + " ORDER BY " + orderBy;
-            SqlDataReader dataReader;
-            connection = new SqlConnection(connectionString);
 
+            //open connection
+            connection = new SqlConnection(connectionString);
             connection.Open();
             command = new SqlCommand(query, connection);
             dataReader = command.ExecuteReader();

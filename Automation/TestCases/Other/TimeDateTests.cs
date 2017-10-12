@@ -27,16 +27,16 @@ namespace Automation.TestCases
             FindAndReserve.LocationDropdown(driver).SendKeys(Keys.Down + Keys.Down + Keys.Tab);
             
             //Enter start date, then validate   
-            FindAndReserve.StartDate(driver).SendKeys(date.ToString(Strngs.GetDateFormat()) + Keys.Tab);
-            Assert.AreEqual(date.ToString(Strngs.GetDateFormat()), FindAndReserve.StartDate(driver).GetAttribute(Strngs.GetAttribute()));
+            FindAndReserve.StartDate(driver).SendKeys(date.ToString("g") + Keys.Tab);
+            Assert.AreEqual(date.ToString("g"), FindAndReserve.StartDate(driver).GetAttribute("value"));
 
             //Enter end date
             date = date.Add(TimeSpan.FromDays(5));
-            FindAndReserve.EndDate(driver).SendKeys(date.ToString(Strngs.GetDateFormat()) + Keys.Tab);
-            Assert.AreEqual(date.ToString(Strngs.GetDateFormat()), FindAndReserve.EndDate(driver).GetAttribute(Strngs.GetAttribute()));
+            FindAndReserve.EndDate(driver).SendKeys(date.ToString("g") + Keys.Tab);
+            Assert.AreEqual(date.ToString("g"), FindAndReserve.EndDate(driver).GetAttribute("value"));
 
-            validation.Add("Start Date", FindAndReserve.StartDate(driver).GetAttribute(Strngs.GetAttribute()));
-            validation.Add("End Date", FindAndReserve.EndDate(driver).GetAttribute(Strngs.GetAttribute()));
+            validation.Add("Start Date", FindAndReserve.StartDate(driver).GetAttribute("value"));
+            validation.Add("End Date", FindAndReserve.EndDate(driver).GetAttribute("value"));
 
             FindAndReserve.ContinueAsGuest(driver).Click();
         }
@@ -48,12 +48,12 @@ namespace Automation.TestCases
             IWebElement element = wait.Until(driver => ChooseRate.ReserveButton(driver));
 
             date = date.Subtract(TimeSpan.FromDays(5));
-            Assert.AreEqual(date.ToString(Strngs.GetDateFormat()), ChooseRate.StartDate(driver).GetAttribute(Strngs.GetAttribute()));
-            validation.Add("Start Date", ChooseRate.StartDate(driver).GetAttribute(Strngs.GetAttribute()));
+            Assert.AreEqual(date.ToString("g"), ChooseRate.StartDate(driver).GetAttribute("value"));
+            validation.Add("Start Date", ChooseRate.StartDate(driver).GetAttribute("value"));
 
             date = date.Add(TimeSpan.FromDays(5));
-            Assert.AreEqual(date.ToString(Strngs.GetDateFormat()), ChooseRate.EndDate(driver).GetAttribute(Strngs.GetAttribute()));
-            validation.Add("End Date", ChooseRate.EndDate(driver).GetAttribute(Strngs.GetAttribute()));
+            Assert.AreEqual(date.ToString("g"), ChooseRate.EndDate(driver).GetAttribute("value"));
+            validation.Add("End Date", ChooseRate.EndDate(driver).GetAttribute("value"));
 
             ChooseRate.ReserveButton(driver).Click();
         }
@@ -69,11 +69,11 @@ namespace Automation.TestCases
             //test = test.Remove(testLength - 6, 3);
 
             date = date.Subtract(TimeSpan.FromDays(5));
-            Assert.AreEqual(date.ToString(Strngs.GetDateFormat()), ProvideInformation.StartDate(driver).Text.Remove(ProvideInformation.StartDate(driver).Text.Length - 6, 3));
+            Assert.AreEqual(date.ToString("g"), ProvideInformation.StartDate(driver).Text.Remove(ProvideInformation.StartDate(driver).Text.Length - 6, 3));
             validation.Add("Start Date", ProvideInformation.StartDate(driver).Text.Remove(ProvideInformation.StartDate(driver).Text.Length - 6, 3));
 
             date = date.Add(TimeSpan.FromDays(5));
-            Assert.AreEqual(date.ToString(Strngs.GetDateFormat()), ProvideInformation.EndDate(driver).Text.Remove(ProvideInformation.EndDate(driver).Text.Length - 6, 3));
+            Assert.AreEqual(date.ToString("g"), ProvideInformation.EndDate(driver).Text.Remove(ProvideInformation.EndDate(driver).Text.Length - 6, 3));
             validation.Add("End Date", ProvideInformation.EndDate(driver).Text.Remove(ProvideInformation.EndDate(driver).Text.Length - 6, 3));
 
             ProvideInformation.FirstName(driver).SendKeys(user.GetFirstName());
@@ -94,19 +94,19 @@ namespace Automation.TestCases
         [Test, Order(5)]
         public void TimeDate_Database()
         {
-            Dictionary<int,string> test = DBConnect.getReservationDates((Int32.Parse(Confirmation.ConfirmationNumber(driver).Text)));
-
+            Reservation reservation = new Reservation();
+            Dictionary<int,string> test = reservation.GetReservationDates((Int32.Parse(Confirmation.ConfirmationNumber(driver).Text)));
             //foreach (KeyValuePair<int, string> pair in test)
             //{
             //    Console.Write(pair.Key + ":  " + pair.Value + "\n");
             //}        
 
             date = date.Subtract(TimeSpan.FromDays(5));
-            Assert.AreEqual(date.ToString(Strngs.GetDateFormat()), test[1].Remove(test[1].Length -6, 3));
+            Assert.AreEqual(date.ToString("g"), test[1].Remove(test[1].Length -6, 3));
             validation.Add("Start Date", test[1].Remove(test[1].Length - 6, 3));
 
             date = date.Add(TimeSpan.FromDays(5));
-            Assert.AreEqual(date.ToString(Strngs.GetDateFormat()), test[2].Remove(test[2].Length - 6, 3));
+            Assert.AreEqual(date.ToString("g"), test[2].Remove(test[2].Length - 6, 3));
             validation.Add("End Date", test[2].Remove(test[2].Length - 6, 3));
 
         }

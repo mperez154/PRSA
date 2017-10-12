@@ -61,16 +61,20 @@
   <ItemGroup>
     <Compile Include="Data\Channels.cs" />
     <Compile Include="Data\DBConnect.cs" />
-    <Compile Include="Data\Strngs.cs" />
+    <Compile Include="Data\Reservations.cs" />
     <Compile Include="Data\User.cs" />
     <Compile Include="Interfaces\BasePage.cs" />
     <Compile Include="Interfaces\BaseTest.cs" />
     <Compile Include="Interfaces\PerformanceBase.cs" />
+    <Compile Include="Pages\AdminLoginPage.cs" />
     <Compile Include="Pages\ChooseRate.cs" />
     <Compile Include="Pages\Confirmation.cs" />
     <Compile Include="Pages\FindAndReserve.cs" />
     <Compile Include="Pages\ProvideInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestCases\AdminFunctions\HostPortUser.cs" />
+    <Compile Include="TestCases\Pages\AdminTest.cs" />
+    <Compile Include="TestCases\Pages\ChoseRateTest.cs" />
     <Compile Include="TestCases\Pages\FindAndReserveTest.cs" />
     <Compile Include="TestCases\Other\PerformanceTest.cs" />
     <Compile Include="TestCases\Reservations\ReservationsTest.cs" />

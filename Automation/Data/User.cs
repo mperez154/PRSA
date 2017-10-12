@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 
 namespace Automation.Data
 {
-    class User
+    class User : DBConnect
     {
         private string firstname;
         private string lastname;
@@ -18,15 +18,14 @@ namespace Automation.Data
         
         public User()
         {
-            string connectionString = "Data Source=PRS-SQL-SERVER\\QASQLSERVER;Initial Catalog=LUIS_PARKING;User Id=luis_parking_user; Password=luispass!1";
-            SqlConnection connection;
-            SqlCommand command;
+            //Building query 
             string selects = " consumer_id, firstname, lastname, username, password, address_1, state_region, postal_code, home_phone, city ";
             string tables = " dbo.consumer ";
             string wheres = " firstname IS NOT NULL AND firstname != '' AND lastname IS NOT NULL AND lastname != '' and username IS NOT NULL  and username != '' AND address_1 IS NOT NULL AND address_1 != '' AND state_region IS NOT NULL AND state_region != '' AND postal_code IS NOT NULL AND postal_code != '' and home_phone IS NOT NULL and home_phone != '' AND city IS NOT NULL AND city != '' ";
             string orderBy = " 1, 2 ASC OFFSET " + GetRandomNumber() + " ROWS FETCH NEXT 1 ROWS ONLY; ";
             string query = "SELECT " + selects + " FROM " + tables + " WHERE " + wheres + " ORDER BY " + orderBy;
-            SqlDataReader dataReader;
+            
+            //Open connection
             connection = new SqlConnection(connectionString);
 
             try
@@ -57,11 +56,6 @@ namespace Automation.Data
             {
                 Console.Write(ex.Message + "Can not open connection!");
             }
-        }
-
-        public User(string myString)
-        {
-            DBConnect.GetUser();
         }
 
         public string GetRandomNumber()

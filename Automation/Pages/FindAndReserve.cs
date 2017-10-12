@@ -113,9 +113,9 @@ namespace Automation.Pages
             ClickLocation(driver);   //Test to see if line above can be replaced
             LocationDropdown(driver).SendKeys(Keys.Down + Keys.Down);
             StartDate(driver).Clear();
-            StartDate(driver).SendKeys(date.ToString(Strngs.GetDateFormat()) + Keys.Tab);
+            StartDate(driver).SendKeys(date.ToString("g") + Keys.Tab);
             EndDate(driver).Clear();
-            EndDate(driver).SendKeys(date.Add(TimeSpan.FromDays(GetRandomNumber(1, 5))).ToString(Strngs.GetDateFormat()));
+            EndDate(driver).SendKeys(date.Add(TimeSpan.FromDays(GetRandomNumber(1, 5))).ToString("g"));
             Discount(driver).Click();
             ContinueAsGuest(driver).Click(); //Click continue as guest
         }
